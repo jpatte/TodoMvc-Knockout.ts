@@ -1,0 +1,74 @@
+﻿<!doctype html>
+<html lang="en" data-framework="knockoutjs">
+<head>
+  <meta charset="utf-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <title>Knockout.js with TypeScript • TodoMVC</title>
+  <link rel="stylesheet" href="todomvc-common/base.css">
+</head>
+
+<body>
+  <section id="todoapp">
+    <header id="header" data-bind="template: 'appHeaderTemplate'"></header>
+    <section id="main" data-bind="visible: items().length, template: 'appBodyTemplate'"></section>
+    <footer id="footer" data-bind="visible: items().length, template: 'appFooterTemplate'"></footer>
+  </section>
+
+  <footer id="info" data-bind="template: 'pageFooterTemplate'"></footer>
+
+  <!-- templates -->
+
+  <script type="text/html" id="appHeaderTemplate">
+    <h1>todos</h1>
+    <input id="new-todo" data-bind="value: newItemTitle, valueUpdate: 'afterkeydown', enterKey: addNewItem" placeholder="What needs to be done?" autofocus>
+  </script>
+
+  <script type="text/html" id="appFooterTemplate">
+    <span id="todo-count">
+      <strong data-bind="text: remainingItemsCount">0</strong>
+      <span data-bind="text: remainingItemsCount() === 1 ? 'item' : 'items'"></span> left
+    </span>
+    <ul id="filters">
+      <li><a data-bind="css: { selected: currentFilter() == 'all' }" href="#/all">All</a></li>
+      <li><a data-bind="css: { selected: currentFilter() == 'active' }" href="#/active">Active</a></li>
+      <li><a data-bind="css: { selected: currentFilter() == 'completed' }" href="#/completed">Completed</a></li>
+    </ul>
+    <button id="clear-completed" data-bind="visible: completedItemsCount, click: removeCompletedItems">
+      Clear completed (<span data-bind="text: completedItemsCount"></span>)
+    </button>
+  </script>
+
+  <script type="text/html" id="appBodyTemplate">
+    <input id="toggle-all" data-bind="checked: allItemsCompleted" type="checkbox">
+    <label for="toggle-all">Mark all as complete</label>
+    <ul id="todo-list" data-bind="template: { name: 'todoItemTemplate', foreach: filteredItems }"></ul>
+  </script>
+
+  <script type="text/html" id="todoItemTemplate">
+    <li data-bind="css: { completed: completed, editing: editing }">
+      <div class="view">
+        <input class="toggle" data-bind="checked: completed" type="checkbox">
+        <label data-bind="text: title, event: { dblclick: function() { $root.editItem($data) } }"></label>
+        <button class="destroy" data-bind="click: function() { $root.removeItem($data) }"></button>
+      </div>
+      <input class="edit" data-bind="value: title, valueUpdate: 'afterkeydown',
+        enterKey: function() { $root.saveEditing($data) }, escapeKey: function() { $root.cancelEditing($data) },
+        selectAndFocus: editing, event: { blur: function() { $root.stopEditing($data) } }">
+    </li>
+  </script>
+
+  <script type="text/html" id="pageFooterTemplate">
+    <p>Double-click to edit a todo</p>
+    <p>Written by <a href="https://github.com/jpatte">Julien Patte</a> based on original code by <a href="https://github.com/ashish01/knockoutjs-todos">Ashish Sharma</a> and <a href="http://knockmeout.net">Ryan Niemeyer</a></p>
+    <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+  </script>
+
+  <!-- scripts -->
+
+  <script src="todomvc-common/base.js"></script>
+  <script src="scripts/libs/knockout-3.0.0.debug.js"></script>
+  <script src="scripts/libs/director.js"></script>
+  <script src="scripts/compiled/utils.js"></script>
+  <script src="scripts/compiled/app.js"></script>
+</body>
+</html>
