@@ -53,7 +53,7 @@
       </div>
       <input class="edit" data-bind="value: title, valueUpdate: 'afterkeydown',
         enterKey: function() { $root.saveEditing($data) }, escapeKey: function() { $root.cancelEditing($data) },
-        selectAndFocus: editing, event: { blur: function() { $root.stopEditing($data) } }">
+        selectAndFocus: editing, event: { blur: function() { $root.saveEditing($data) } }">
     </li>
   </script>
 
